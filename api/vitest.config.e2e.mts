@@ -8,5 +8,5 @@ export default defineConfig({
     globals: true,
     root: './',
   },
-  plugins: [swc.vite(), tsConfigPaths()],
+  plugins: [swc.vite() as any, tsConfigPaths()],
 });
