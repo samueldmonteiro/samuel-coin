@@ -1,6 +1,5 @@
 import { WalletAddress } from '@/domain/entities/wallet-address.entity';
 import { Wallet } from '@/domain/entities/wallet.entity';
-import { DomainError } from '@/domain/errors/domain.error';
 import { WalletAddressRepository } from '@/domain/repositories/wallet-address.repository';
 import { WalletRepository } from '@/domain/repositories/wallet.repository';
 import { WalletCriptoService } from '@/domain/services/wallet-cripto.service';
@@ -16,7 +15,7 @@ export class CreateWalletUseCase {
     private walletRepository: WalletRepository,
     private walletAddressRepository: WalletAddressRepository,
     private walletCriptoService: WalletCriptoService,
-  ) { }
+  ) {}
 
   async execute(): Promise<CreateWalletUseCaseResponse> {
     const walletCripto = await this.walletCriptoService.generateWallet();

@@ -5,30 +5,35 @@ import {
   WalletCriptoService,
 } from '@/domain/services/wallet-cripto.service';
 import { Injectable } from '@nestjs/common';
+import { GenerateWalletError } from '@/domain/errors/generate-wallet.error';
 
 @Injectable()
 export class WalletCripto implements WalletCriptoService {
   async generateWallet(): Promise<GenerateWalletResponse> {
-    const { HDKey } = await import('@scure/bip32');
+    try {
+      const { HDKey } = await import('@scure/bip32');
 
-    const mnemonic = bip39.generateMnemonic(128); // 128 bits = 12 palavras
+      const mnemonic = bip39.generateMnemonic(128); // 128 bits = 12 palavras
 
-    const seed = bip39.mnemonicToSeedSync(mnemonic);
+      const seed = bip39.mnemonicToSeedSync(mnemonic);
 
-    const hdkey = HDKey.fromMasterSeed(seed);
-    const derived = hdkey.derive("m/44'/0'/0'/0/0");
+      const hdkey = HDKey.fromMasterSeed(seed);
+      const derived = hdkey.derive("m/44'/0'/0'/0/0");
 
-    if (!derived.privateKey || !derived.publicKey) {
-      throw new Error('Failed to generate private/public key pair');
+      if (!derived.privateKey || !derived.publicKey) {
+        throw new Error('Failed to generate private/public key pair');
+      }
+
+      const identifier = this.generateIdentifier(derived.publicKey);
+
+      return {
+        mnemonic,
+        identifier,
+        publicKey: Buffer.from(derived.publicKey).toString('hex'),
+      };
+    } catch (error: any) {
+      throw new GenerateWalletError(error.message);
     }
-
-    const identifier = this.generateIdentifier(derived.publicKey);
-
-    return {
-      mnemonic,
-      identifier,
-      publicKey: Buffer.from(derived.publicKey).toString('hex'),
-    };
   }
 
   private generateIdentifier(publicKey: Uint8Array): string {
