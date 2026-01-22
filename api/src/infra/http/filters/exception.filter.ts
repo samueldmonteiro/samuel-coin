@@ -4,12 +4,14 @@ import {
   ArgumentsHost,
   HttpStatus,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { DomainError } from '@/domain/errors/domain.error';
 
 @Catch(DomainError)
 export class DomainExceptionFilter implements ExceptionFilter {
   catch(exception: DomainError, host: ArgumentsHost) {
-    const response = host.switchToHttp().getResponse();
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
 
     const map = {
       DomainError: HttpStatus.BAD_REQUEST,
