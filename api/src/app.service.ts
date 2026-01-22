@@ -3,7 +3,7 @@ import { PrismaService } from './infra/db/prisma/prisma.service';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async getHello(): Promise<any> {
     return await this.prisma.wallet.findMany({});

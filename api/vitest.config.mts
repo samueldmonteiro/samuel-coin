@@ -24,15 +24,15 @@ export default defineConfig({
         },
       },
 
-      /**{
+      {
         extends: true,
         test: {
           testTimeout: 15000,
           name: 'int',
-          dir: 'src/tests/integration',
-          environment: './prisma/vitest-env-prisma/prisma-test-env.ts',
+          dir: 'tests/integration',
+          setupFiles: ['./tests/integration/setup-file.ts'],
         },
-      },**/
+      },
     ],
   },
   plugins: [
