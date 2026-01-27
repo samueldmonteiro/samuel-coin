@@ -1,6 +1,6 @@
-# Samuel Coin
+# 🪙 Samuel Coin
 
-Implementação de uma criptomoeda com carteiras de **auto-custódia** inspiradas no Bitcoin. Sistema completo de gerenciamento de carteiras usando criptografia de curva elíptica, seeds mnemônicas e chaves públicas/privadas.
+Implementação de uma criptomoeda com carteiras de **auto-custódia** inspiradas no Bitcoin. Sistema completo de gerenciamento de carteiras, transações e marketplace, usando criptografia de curva elíptica, seeds mnemônicas e chaves públicas/privadas, alta segurança e anônimato.
 
 ## 🔐 Características
 
@@ -61,7 +61,7 @@ DB_PASSWORD=password
 DB_USER=user
 ```
 
-### 4. Configure as variáveis de ambiente da api
+### 3.2. Configure as variáveis de ambiente da api
 ```bash
 cd api
 cp .env.example .env
