@@ -13,6 +13,7 @@ import { PrismaService } from '../infra/db/prisma/prisma.service';
   controllers: [WalletController],
   providers: [
     PrismaService,
+    CreateWalletUseCase,
     {
       provide: WalletRepository,
       useClass: PrismaWalletRepository,
@@ -25,22 +26,6 @@ import { PrismaService } from '../infra/db/prisma/prisma.service';
       provide: WalletCriptoService,
       useClass: WalletCripto,
     },
-    {
-      provide: CreateWalletUseCase,
-      useFactory: (
-        walletRepository: WalletRepository,
-        walletAddressRepository: WalletAddressRepository,
-        walletCriptoService: WalletCriptoService,
-      ) => {
-        return new CreateWalletUseCase(
-          walletRepository,
-          walletAddressRepository,
-          walletCriptoService,
-        );
-      },
-      inject: [WalletRepository, WalletAddressRepository, WalletCriptoService],
-    },
   ],
-  exports: [CreateWalletUseCase],
 })
-export class AuthModule {}
+export class WalletModule {}

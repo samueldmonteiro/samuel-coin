@@ -2,11 +2,11 @@ import 'dotenv/config';
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { DomainExceptionFilter } from './infra/http/filters/exception.filter';
+import { GlobalExceptionFilter } from './infra/http/filters/global-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalFilters(new DomainExceptionFilter());
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   await app.listen(process.env.PORT ?? 3000);
 }

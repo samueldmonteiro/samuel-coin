@@ -3,6 +3,7 @@ import { Wallet } from '@/domain/entities/wallet.entity';
 import { WalletAddressRepository } from '@/domain/repositories/wallet-address.repository';
 import { WalletRepository } from '@/domain/repositories/wallet.repository';
 import { WalletCriptoService } from '@/domain/services/wallet-cripto.service';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 export interface CreateWalletUseCaseResponse {
@@ -10,14 +11,16 @@ export interface CreateWalletUseCaseResponse {
   seed: string;
 }
 
+@Injectable()
 export class CreateWalletUseCase {
   constructor(
     private walletRepository: WalletRepository,
     private walletAddressRepository: WalletAddressRepository,
     private walletCriptoService: WalletCriptoService,
-  ) {}
+  ) { }
 
   async execute(): Promise<CreateWalletUseCaseResponse> {
+
     const walletCripto = await this.walletCriptoService.generateWallet();
 
     const newWallet = new Wallet({
@@ -35,6 +38,7 @@ export class CreateWalletUseCase {
       createdAt: new Date(),
       wallet: newWallet,
     });
+
 
     newWallet.addAddress(newWalletAddress);
 
